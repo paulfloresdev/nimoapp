@@ -11,9 +11,8 @@ import { logOutRequest, meRequest } from '../../store/features/auth/authSlice';
 const options = [
     { index: 0, label: 'Inicio', icon: 'FaHome', href: '/dashboard' },
     { index: 1, label: 'Presupuestos mensuales', icon: 'FaClipboardList', href: '/dashboard/months' },
-    { index: 2, label: 'Movimientos', icon: 'FaExchangeAlt', href: '/dashboard/transactions' },
-    { index: 3, label: 'Cuentas y tarjetas', icon: 'FaMoneyCheckAlt', href: '/' },
-    { index: 4, label: 'Contactos', icon: 'FaUserFriends', href: '/' },
+    { index: 2, label: 'Cuentas y tarjetas', icon: 'FaMoneyCheckAlt', href: '/' },
+    { index: 3, label: 'Contactos', icon: 'FaUserFriends', href: '/' },
 ];
 
 const SideBar: React.FC<SideBarProps> = ({ page }) => {
@@ -41,15 +40,6 @@ const SideBar: React.FC<SideBarProps> = ({ page }) => {
     }, [dispatch, user]);
 
 
-    useEffect(() => {
-        console.log('Componente montado: SideBar');
-
-        return () => {
-        console.log('Componente desmontado: SideBar');
-        };
-    }, []);
-
-
     const handleLogout = useCallback(() => {
         dispatch(logOutRequest());
         navigate('/login');
@@ -57,14 +47,13 @@ const SideBar: React.FC<SideBarProps> = ({ page }) => {
 
     const initials = (name:string, lastname:string) => {
         if(name === "" || lastname === "") return "";
-
         return `${name[0].toLocaleUpperCase()}${lastname[0].toLocaleUpperCase()}`;
     }
 
     return (
         <aside
         className={`
-            flex flex-col bg-neutral-100 border-r
+            flex-col bg-neutral-50 border-r
             transition-all duration-300 ease-in-out
             hidden lg:flex py-6
             h-screen overflow-hidden
@@ -110,27 +99,27 @@ const SideBar: React.FC<SideBarProps> = ({ page }) => {
                 <Divider className="mb-4" />
                 <Dropdown>
                     <DropdownTrigger>
-                    <Button
-                        variant="light"
-                        className="w-full h-10 flex flex-row items-center justify-start space-x-1"
-                    >
-                        <div className="bg-neutral-200 w-12 h-10 rounded-full flex justify-center items-center border border-neutral-300">
-                        <span className="font-semibold text-base text-neutral-950">
-                            {user && initials(user?.name ?? "", user?.lastname ?? "")}
-                            {/*user
-                            ? `${user.name[0]?.toUpperCase()}${user.lastname[0].toUpperCase()}`
-                            : ''*/}
-                        </span>
-                        </div>
+                        <Button
+                            variant="light"
+                            className="w-full h-10 flex flex-row items-center justify-start space-x-1"
+                        >
+                            <div className="bg-neutral-200 w-12 h-10 rounded-full flex justify-center items-center border border-neutral-300">
+                            <span className="font-semibold text-base text-neutral-950">
+                                {user && initials(user?.name ?? "", user?.lastname ?? "")}
+                                {/*user
+                                ? `${user.name[0]?.toUpperCase()}${user.lastname[0].toUpperCase()}`
+                                : ''*/}
+                            </span>
+                            </div>
 
-                        <DynamicFaIcon name="FaAngleUp" className="text-gray-400 ml-auto" />
-                    </Button>
+                            <DynamicFaIcon name="FaAngleUp" className="text-gray-400 ml-auto" />
+                        </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem key="edit">Editar datos de usuario</DropdownItem>
-                    <DropdownItem key="delete" className="text-danger" color="danger" onClick={handleLogout}>
-                        Cerrar sesión
-                    </DropdownItem>
+                        <DropdownItem key="edit">Editar datos de usuario</DropdownItem>
+                        <DropdownItem key="delete" className="text-danger" color="danger" onClick={handleLogout}>
+                            Cerrar sesión
+                        </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
                 </div>

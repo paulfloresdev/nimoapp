@@ -37,8 +37,11 @@ const Login: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className='h-dscreen w-screen flex flex-col justify-between items-center px-6 lg:px-0 pt-16 pb-8'>
+        <form onSubmit={handleSubmit} className='h-dscreen w-screen flex flex-col justify-between items-center px-6 lg:px-0 pt-4 lg:pt-12 pb-8 lg:pb-24'>
             <div className="w-full lg:w-1/4 flex flex-col items-start justify-start gap-y-8">
+                <div className='w-full flex flex-row justify-center lg:pb-12'>
+                    <img src="/assets/favicon.png" alt="Logo" className="h-8 lg:h-12" />
+                </div>
                 <span className='text-3xl font-semibold'>Inicio de sesión</span>
                 <div className='w-full flex flex-col gap-y-6'>
                     <Input
@@ -74,7 +77,7 @@ const Login: React.FC = () => {
                             }
                         />
                         <button>
-                            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-sm font-semibold hover:text-black">
+                            <span className="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent text-sm font-semibold hover:text-black">
                                 ¿Olvidaste tu contraseña?
                             </span>
                         </button>
@@ -89,7 +92,7 @@ const Login: React.FC = () => {
                     variant="shadow"
                     color='primary'
                     radius='lg'
-                    className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 mt-3"
+                    className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 mt-3"
                     isLoading={loading}
                 >
                     {loading ? 'Entrando...' : 'Entrar'}
@@ -131,7 +134,7 @@ const Login: React.FC = () => {
             <div className='w-full text-center'>
                     <span className='text-sm'>¿No tienes cuenta? </span>
                     <button>
-                        <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent text-sm font-semibold hover:text-">
+                        <span className="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 bg-clip-text text-transparent text-sm font-semibold hover:text-">
                             Registrate aquí
                         </span>
                     </button>

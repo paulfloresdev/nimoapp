@@ -2,12 +2,13 @@ import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } 
 import qs from 'qs';
 //import createAuthRefreshInterceptor from 'axios-auth-refresh'
 
-const autoApi = import.meta.env.VITE_SITE_BASE_API_URL_BACKEND;
+const baseUrl = import.meta.env.VITE_SITE_BASE_API_URL_BACKEND;
 
 const axiosInstance = axios.create({
-    baseURL: autoApi,
+    baseURL: baseUrl,
     headers: {
         'Accept': 'application/json',
+        //'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
     },
     withCredentials: false

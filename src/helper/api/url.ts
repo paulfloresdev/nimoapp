@@ -10,7 +10,14 @@ export const AUTH_LOGOUT = "/auth/logout"
 export const GET_YEARS_WITH = '/getYearsWith'
 export const GET_MONTHS_WITH = '/getMonthsWith'
 export const GET_CARDS_BALANCE = '/getCardsBalance'
+export const GET_MONTH_BALANCE = '/getMonthBalance'
 export const GET_TRANSACTIONS = '/getTransactions'
-export const TRANSACTION_STORE = '/transactions'
-export const TRANSACTION_UPDATE = '/transactions'
-export const TRANSACTION_DESTROY = '/transactions'
+export const TRANSACTIONS = '/transactions'
+
+//  INCOME RELATIONS
+export const STORE_INCOME_RELATIONS = '/income-relations'
+export const INDEX_INCOME_RELATIONS = '/income-relations/all'
+export const VERIFY_INCOME_RELATIONS = '/verify-income-relation'
+
+//  CARDS
+export const CARDS = '/cards';

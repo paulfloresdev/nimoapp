@@ -5,8 +5,8 @@ export interface User {
     lastname: string | null;
     phone: string | null;
     email: string | null;
-    createdAt: string | null;
-    updatedAt: string | null;
+    created_at: string | null;
+    updated_at: string | null;
 }
 
 //  Params
