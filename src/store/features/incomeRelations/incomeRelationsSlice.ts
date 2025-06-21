@@ -10,6 +10,7 @@ const initialState: IncomeRelationState = {
     stored: null,
     loading: false,
     error: null,
+    successStore: null,
 }
 
 const incomeRelationsSlice = createSlice({
@@ -42,18 +43,20 @@ const incomeRelationsSlice = createSlice({
             state.verified = null;
             state.stored = null;
             state.totalIncomes = null;
-            
+
         },
         storeIncomeRelationsSuccess: (state, action: PayloadAction<StoreIncomeRelationPayload>) => {
             state.loading = false;
             state.item = action.payload.data;
             state.message = action.payload.message;
             state.stored = true;
+            state.successStore = true;
         },
         storeIncomeRelationsFailure: (state, action: PayloadAction<string>) => {
             state.loading = false;
             state.error = action.payload;
             state.stored = false;
+            state.successStore = false;
         },
 
         //  Verify

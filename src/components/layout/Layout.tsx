@@ -13,17 +13,18 @@ const Layout: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogout = useCallback(() => {
-            dispatch(logOutRequest());
-            navigate('/login');
-        }, [dispatch, navigate]);
+        dispatch(logOutRequest());
+        navigate('/login');
+    }, [dispatch, navigate]);
 
     // Determinar el valor de `page` en base a la URL
     const path = location.pathname;
     let page = 0;
 
-    if (path.includes("/dashboard/months")) page = 1;
-    else if (path.includes("/dashboard/incomes")) page = 2;
-    else if (path.includes("/dashboard/contacts")) page = 3;
+    if (path.includes("/dashboard/recurrents")) page = 1;
+    else if (path.includes("/dashboard/months")) page = 2;
+    else if (path.includes("/dashboard/cards")) page = 3;
+    else if (path.includes("/dashboard/contacts")) page = 4;
 
     return (
         <div className="flex min-h-dscreen bg-white">
@@ -36,7 +37,7 @@ const Layout: React.FC = () => {
                         <Dropdown>
                             <DropdownTrigger>
                                 <Button variant="light" className="min-w-2 w-12">
-                                    <DynamicFaIcon name={"FaEllipsisV"} className="text-neutral-950"/>
+                                    <DynamicFaIcon name={"FaEllipsisV"} className="text-neutral-950" />
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Static Actions">
@@ -46,7 +47,7 @@ const Layout: React.FC = () => {
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        
+
                     </div>
                     <div className="w-full h-full pb-12">
                         <Outlet />

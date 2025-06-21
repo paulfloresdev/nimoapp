@@ -7,7 +7,7 @@ export interface Category {
     icon: string | null;
 }
 
-export interface TransactionType extends Type {}
+export interface TransactionType extends Type { }
 
 export interface Transaction {
     id: number;
@@ -29,6 +29,9 @@ export interface TransactionState {
     message: string | null;
     loading: boolean;
     error: string | null;
+    storeSuccess: boolean | null;
+    updateSuccess: boolean | null;
+    destroySuccess: boolean | null;
 }
 
 export interface StoreTransactionParams {
@@ -41,6 +44,7 @@ export interface StoreTransactionParams {
     category_id: number | null;
     type_id: number | null;
     card_id: number | null;
+    second_card_id: number | undefined;
 }
 
 export interface StoreTransactionPayload {
@@ -57,6 +61,7 @@ export interface UpdateTransactionParams {
     notes: string | null;
     category_id: number | null;
     card_id: number | null;
+    second_card_id: number | undefined;
 }
 
 interface UpdateTransactionPayload {

@@ -23,6 +23,7 @@ export interface IncomeRelationState {
     message: string | null;
     loading: boolean;
     error: string | null;
+    successStore: boolean | null;
 }
 
 export interface StoreIncomeRelationParams {

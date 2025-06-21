@@ -10,6 +10,7 @@ export interface SideBarOptionProps {
     label: string,
     icon: string,
     href: string
+    isCollapsed: boolean,
 }
 
 export interface BottomNavProps {

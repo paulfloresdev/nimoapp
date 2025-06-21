@@ -1,4 +1,5 @@
 import { LogInParams, SignUpParams, UpdateUserDataParams, UpdateUserPasswordParams } from "../../types/auth";
+import { StoreCardsParams, UpdateCardsParams } from "../../types/cards";
 import { IndexIncomeRelationParams, StoreIncomeRelationParams, VerifyIncomeRelationParams } from "../../types/incomeRelations";
 import { StoreTransactionParams, UpdateTransactionParams } from "../../types/transactions";
 import { api } from "./configuration";
@@ -28,3 +29,6 @@ export const verifyIncomeRelationsAPI = (data: VerifyIncomeRelationParams) => ap
 
 //  Cards
 export const indexCardsAPI = () => api.get(url.CARDS);
+export const storeCardsAPI = (data: StoreCardsParams) => api.post(url.CARDS, data);
+export const updateCardsAPI = (id: string, data: StoreCardsParams) => api.put(`${url.CARDS}/${id}`, data);
+export const destroyCardsAPI = (id: string) => api.delete(`${url.CARDS}/${id}`);

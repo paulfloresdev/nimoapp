@@ -6,8 +6,9 @@ import DashboardLayout from "../components/layout/DashboardLayout.tsx";
 
 const Home = React.lazy(() => import("../pages/private/home/Home.tsx"));
 const TransactionDetail = React.lazy(() => import("../pages/private/transaction/TransactionDetail.tsx"));
+const UpdateTransaction = React.lazy(() => import("../pages/private/transaction/UpdateTransaction.tsx"));
 const AddIncomeRelation = React.lazy(() => import("../pages/private/transaction/AddIncomeRelation.tsx"));
-
+const Cards = React.lazy(() => import("../pages/private/cards/Cards.tsx"));
 
 const AppRoutes = () => (
     <Routes>
@@ -38,13 +39,23 @@ const AppRoutes = () => (
                     <TransactionDetail />
                 </Suspense>
             } />
+            <Route path="transaction/update" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <UpdateTransaction />
+                </Suspense>
+            } />
             <Route path="transaction/add-relation" element={
                 <Suspense fallback={<div>Loading...</div>}>
                     <AddIncomeRelation />
                 </Suspense>
             } />
+            <Route path="cards" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Cards />
+                </Suspense>
+            } />
         </Route>
-        
+
     </Routes>
 );
 
