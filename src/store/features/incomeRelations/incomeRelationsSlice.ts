@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IncomeRelationState, IndexIncomeRelationParams, IndexIncomeRelationPayload, StoreIncomeRelationParams, StoreIncomeRelationPayload, VerifyIncomeRelationParams, VerifyIncomeRelationPayload } from "../../../types/incomeRelations";
+import { IncomeRelationState, IndexIncomeRelationData, IndexIncomeRelationPayload, StoreIncomeRelationParams, StoreIncomeRelationPayload, VerifyIncomeRelationParams, VerifyIncomeRelationPayload } from "../../../types/incomeRelations";
 
 const initialState: IncomeRelationState = {
     collection: null,
@@ -17,8 +17,20 @@ const incomeRelationsSlice = createSlice({
     name: "income-relations",
     initialState,
     reducers: {
+        resetIncomeRelationsRequest: (state) => {
+            state.collection = null;
+            state.totalIncomes = null;
+            state.item = null;
+            state.message = null;
+            state.verified = null;
+            state.stored = null;
+            state.loading = false;
+            state.error = null;
+            state.successStore = null;
+        },
+
         //  Index
-        indexIncomeRelationsRequest: (state, action: PayloadAction<IndexIncomeRelationParams>) => {
+        indexIncomeRelationsRequest: (state, action: PayloadAction<IndexIncomeRelationData>) => {
             state.loading = true;
             state.error = null;
             state.verified = null;
@@ -82,6 +94,7 @@ const incomeRelationsSlice = createSlice({
 });
 
 export const {
+    resetIncomeRelationsRequest,
     indexIncomeRelationsRequest,
     indexIncomeRelationsSuccess,
     indexIncomeRelationsFailure,

@@ -38,10 +38,14 @@ export interface StoreIncomeRelationPayload {
     data: IncomeRelation | null;
 }
 
-export interface IndexIncomeRelationParams {
-    contact_id: number | undefined;
-    from_id: number | undefined;
-    to_id: number | undefined;
+export interface IndexIncomeRelationData {
+    contact_id?: number | undefined;
+    from_id?: number | undefined;
+    to_id?: number | undefined;
+    year?: number | undefined;
+    month?: number | undefined;
+    exclude_payments?: boolean | undefined;
+    page: string | undefined;
 }
 
 export interface IndexIncomeRelationPayload {

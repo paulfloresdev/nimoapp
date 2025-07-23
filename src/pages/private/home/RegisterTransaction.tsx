@@ -71,7 +71,7 @@ const RegisterTransaction: React.FC = () => {
                             );
                         }
                     }}
-                    size="md" variant="flat"
+                    size="lg" variant="flat"
                 >
                     Detalle
                 </Button>,
@@ -137,12 +137,12 @@ const RegisterTransaction: React.FC = () => {
             className="w-full flex flex-col gap-y-6"
         >
             <div className="w-full flex flex-col gap-y-6">
-                <span className="font-semibold text-center">Registrar movimiento</span>
+                <span className="font-semibold text-left">Registrar movimiento</span>
                 <span className="font-medium text-center">Información general</span>
                 <div className="w-full flex flex-col lg:flex-row gap-x-4 gap-y-6">
                     <Select
                         required={true}
-                        size="md"
+                        size="lg"
                         variant="flat"
                         label="Tipo de movimiento"
                         placeholder="Tipo de movimiento"
@@ -176,7 +176,7 @@ const RegisterTransaction: React.FC = () => {
                     </Select>
                     <Select
                         required
-                        size="md"
+                        size="lg"
                         variant="flat"
                         label="Categoría"
                         labelPlacement="outside"
@@ -194,7 +194,7 @@ const RegisterTransaction: React.FC = () => {
                         ))}
                     </Select>
                     {transactionTypeId !== 3 && (<RadioGroup
-                        size="md"
+                        size="lg"
                         label="Tipo de tarjeta"
                         orientation="horizontal"
                         value={cardTypeId?.toString()}
@@ -238,7 +238,7 @@ const RegisterTransaction: React.FC = () => {
                                 ) : (transactionTypeId !== 3) ? (
                                     <Select
                                         required
-                                        size="md"
+                                        size="lg"
                                         variant="flat"
                                         label="Tarjeta"
                                         labelPlacement="outside"
@@ -257,7 +257,7 @@ const RegisterTransaction: React.FC = () => {
                                                     <SelectItem
                                                         key={item.id}
                                                         endContent={
-                                                            <div className={`p-2 w-10 max-h-6 flex flex-col justify-center items-center rounded-md ${item.network?.name === 'Visa' ? 'bg-blue-700' : 'bg-gray-200'}`}>
+                                                            <div className={`p-2 w-10 max-h-6 flex flex-col justify-center items-center rounded-md ${item.network?.name === 'Visa' ? 'bg-blue-700' : 'bg-gray-100'}`}>
                                                                 <img src={`${baseStorageUrl}${item.network?.img_path}`} alt="" />
                                                             </div>
                                                         }
@@ -270,7 +270,7 @@ const RegisterTransaction: React.FC = () => {
                                                         <SelectItem
                                                             key={item.id}
                                                             endContent={
-                                                                <div className={`p-2 w-10 max-h-6 flex flex-col justify-center items-center rounded-md ${item.network?.name === 'Visa' ? 'bg-blue-700' : 'bg-gray-200'}`}>
+                                                                <div className={`p-2 w-10 max-h-6 flex flex-col justify-center items-center rounded-md ${item.network?.name === 'Visa' ? 'bg-blue-700' : 'bg-gray-100'}`}>
                                                                     <img src={`${baseStorageUrl}${item.network?.img_path}`} alt="" />
                                                                 </div>
                                                             }
@@ -288,7 +288,7 @@ const RegisterTransaction: React.FC = () => {
                                     <div className="w-full flex flex-col lg:flex-row gap-y-6 gap-x-4">
                                         <Select
                                             required
-                                            size="md"
+                                            size="lg"
                                             variant="flat"
                                             label="Tarjeta origen"
                                             labelPlacement="outside"
@@ -316,7 +316,7 @@ const RegisterTransaction: React.FC = () => {
                                         </Select>
                                         <Select
                                             required
-                                            size="md"
+                                            size="lg"
                                             variant="flat"
                                             label="Tarjeta destino"
                                             labelPlacement="outside"
@@ -410,8 +410,6 @@ const RegisterTransaction: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-
                 <Textarea
                     size='lg'
                     variant='bordered'
@@ -428,7 +426,7 @@ const RegisterTransaction: React.FC = () => {
                     variant="solid"
                     color='primary'
                     radius='lg'
-                    className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 mt-6 text-medium"
+                    className="w-full lg:w-1/6"
                     isLoading={transactionsState.loading}
                 >
                     Registrar

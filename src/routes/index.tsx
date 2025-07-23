@@ -9,6 +9,11 @@ const TransactionDetail = React.lazy(() => import("../pages/private/transaction/
 const UpdateTransaction = React.lazy(() => import("../pages/private/transaction/UpdateTransaction.tsx"));
 const AddIncomeRelation = React.lazy(() => import("../pages/private/transaction/AddIncomeRelation.tsx"));
 const Cards = React.lazy(() => import("../pages/private/cards/Cards.tsx"));
+const AddCard = React.lazy(() => import("../pages/private/cards/AddCard.tsx"));
+const UpdateCard = React.lazy(() => import("../pages/private/cards/UpdateCard.tsx"));
+const MonthList = React.lazy(() => import("../pages/private/months/MonthList.tsx"));
+const MonthPage = React.lazy(() => import("../pages/private/months/MonthPage.tsx"));
+const Contacts = React.lazy(() => import("../pages/private/contacts/Contacts.tsx"));
 
 const AppRoutes = () => (
     <Routes>
@@ -52,6 +57,31 @@ const AppRoutes = () => (
             <Route path="cards" element={
                 <Suspense fallback={<div>Loading...</div>}>
                     <Cards />
+                </Suspense>
+            } />
+            <Route path="cards/add" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <AddCard />
+                </Suspense>
+            } />
+            <Route path="cards/update" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <UpdateCard />
+                </Suspense>
+            } />
+            <Route path="months" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <MonthList />
+                </Suspense>
+            } />
+            <Route path="month" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <MonthPage />
+                </Suspense>
+            } />
+            <Route path="contacts" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Contacts />
                 </Suspense>
             } />
         </Route>

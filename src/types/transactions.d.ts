@@ -1,4 +1,5 @@
 import { Card, Type } from "./cards";
+import { Paginate } from "./paginate";
 
 
 export interface Category {
@@ -67,4 +68,30 @@ export interface UpdateTransactionParams {
 interface UpdateTransactionPayload {
     id: string;
     data: UpdateTransactionParams;
+}
+export interface MonthsWithParams {
+    page: string | undefined;
+    year: number | undefined;
+}
+
+interface Month {
+    year: number | undefined;
+    month: number | undefined;
+}
+
+interface MonthsWithPaginated extends Paginate {
+    data: Month[] | null;
+}
+
+interface MonthsWithPayload {
+    message: string | null;
+    year: number | null;
+    data: MonthsWithPaginated | null;
+}
+
+interface MonthsWithState {
+    data: MonthsWithPaginated | null;
+    message: string | null;
+    loading: boolean;
+    error: string | null;
 }

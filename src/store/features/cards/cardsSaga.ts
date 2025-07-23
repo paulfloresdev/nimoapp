@@ -32,7 +32,9 @@ function* indexCardsSaga(action: any): Generator<any, any, any> {
 
 function* storeCardsSaga(action: any): Generator<any, any, any> {
     try {
+        console.log("storeCardsSaga", action.payload);
         const res = yield call(storeCardsAPI, action.payload);
+        console.log("res", res);
         yield put(storeCardsSuccess(res));
     } catch (error: any) {
         console.error(error);
@@ -40,7 +42,7 @@ function* storeCardsSaga(action: any): Generator<any, any, any> {
     }
 }
 
-function* updateTransactionsSaga(action: PayloadAction<UpdateCardsParams>): Generator<any, any, any> {
+function* updateCardsSaga(action: PayloadAction<UpdateCardsParams>): Generator<any, any, any> {
     try {
         const { id, data } = action.payload;
         const res = yield call(updateCardsAPI, id, data);
@@ -51,7 +53,7 @@ function* updateTransactionsSaga(action: PayloadAction<UpdateCardsParams>): Gene
     }
 }
 
-function* destroyTransactionsSaga(action: PayloadAction<string>): Generator<any, any, any> {
+function* destroyCardsSaga(action: PayloadAction<string>): Generator<any, any, any> {
     try {
         const res = yield call(destroyCardsAPI, action.payload);
         yield put(destroyCardsSuccess(res.data));
@@ -63,4 +65,7 @@ function* destroyTransactionsSaga(action: PayloadAction<string>): Generator<any,
 
 export function* watchCardsSaga() {
     yield takeLatest(indexCardsRequest.type, indexCardsSaga);
+    yield takeLatest(storeCardsRequest.type, storeCardsSaga);
+    yield takeLatest(updateCardsRequest.type, updateCardsSaga);
+    yield takeLatest(destroyCardsRequest.type, destroyCardsSaga);
 }

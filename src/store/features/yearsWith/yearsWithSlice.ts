@@ -33,4 +33,3 @@ export const {
 } = yearsWithSlice.actions;
 
 export default yearsWithSlice.reducer;
-export type { YearsWithState }

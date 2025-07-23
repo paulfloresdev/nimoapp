@@ -21,3 +21,9 @@ export const VERIFY_INCOME_RELATIONS = '/verify-income-relation'
 
 //  CARDS
 export const CARDS = '/cards';
+
+//  CONTACTS
+export const CONTACTS = '/contacts';
+
+// BANKS
+export const BANKS = '/banks';

@@ -1,8 +1,8 @@
 import RegisterTransaction from "./RegisterTransaction";
 
 const Home: React.FC = () => {
-    
-    
+
+
 
     /*
     const { data: years, loading: loadingYears } = useSelector((state: RootState) => state.years_with);
@@ -12,10 +12,10 @@ const Home: React.FC = () => {
         dispatch(getYearsWithRequest());
     }, [dispatch]);
     */
-    
+
     return (
-        <div className="w-full lg:h-dscreen">
-            <RegisterTransaction/>
+        <div className="w-full lg:h-dscreen pb-12">
+            <RegisterTransaction />
             {/*<Tabs
                 variant="bordered"
             >

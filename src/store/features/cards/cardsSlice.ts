@@ -17,6 +17,18 @@ const cardsSlice = createSlice({
     name: "cards",
     initialState,
     reducers: {
+        //  Reset
+        resetCardsRequest: (state) => {
+            state.loading = false;
+            state.error = null;
+            state.storeSuccess = null;
+            state.updateSuccess = null;
+            state.destroySuccess = null;
+            state.data = null;
+            state.message = null;
+            state.credit = null;
+            state.debit = null;
+        },
         //  Index
         indexCardsRequest: (state) => {
             state.loading = true;
@@ -37,6 +49,7 @@ const cardsSlice = createSlice({
             state.loading = true;
             state.error = null;
             state.storeSuccess = null;
+            console.log("storeCardsRequest", action.payload);
         },
         storeCardsSuccess: (state, action: PayloadAction<StoreCardsPayload>) => {
             state.loading = false;
@@ -69,7 +82,7 @@ const cardsSlice = createSlice({
         },
 
         //  Destroy
-        destroyCardsRequest: (state) => {
+        destroyCardsRequest: (state, action: PayloadAction<string>) => {
             state.loading = true;
             state.error = null;
             state.destroySuccess = null;
@@ -89,6 +102,7 @@ const cardsSlice = createSlice({
 });
 
 export const {
+    resetCardsRequest,
     indexCardsRequest,
     indexCardsSuccess,
     indexCardsFailure,

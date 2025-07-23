@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Transaction, UpdateTransactionParams, UpdateTransactionPayload } from "../../../types/transactions";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Input, Radio, RadioGroup, Select, SelectItem, Skeleton, Textarea } from "@heroui/react";
+import { Button, Input, Radio, RadioGroup, Select, SelectItem, Skeleton, Textarea, addToast } from "@heroui/react";
 import { cardTypes, categories } from "../../../types/combos";
 import { indexCardsRequest } from "../../../store/features/cards/cardsSlice";
 import { RootState } from "../../../store/configStore/store";
 import { IncomeRelation } from "../../../types/incomeRelations";
 import DynamicFaIcon from "../../../components/DynamicFaIcon";
 import TransactionDetail, { TransactionField } from "./TransactionDetail";
-import { updateTransactionsRequest } from "../../../store/features/transactions/transactionsSlice";
+import { resetTransactionsState, updateTransactionsRequest } from "../../../store/features/transactions/transactionsSlice";
 const baseStorageUrl = import.meta.env.VITE_SITE_BASE_STORAGE_URL_BACKEND;
 
 const UpdateTransaction: React.FC = () => {
@@ -45,18 +45,74 @@ const UpdateTransaction: React.FC = () => {
     const [fromIsOpen, setFromIsOpen] = useState<boolean>(false);
     const [toIsOpen, setToIsOpen] = useState<boolean>(false);
 
-
-
     const cardsState = useSelector((state: RootState) => state.cards);
+    const transactionsState = useSelector((state: RootState) => state.transactions);
 
     useEffect(() => {
         dispatch(indexCardsRequest());
     }, [dispatch]);
 
+    useEffect(() => {
+        if (transactionsState.updateSuccess !== null) {
+            if (transactionsState.updateSuccess) {
+                var updatedTransaction = transactionsState.data;
+                navigate(
+                    '/dashboard/transaction',
+                    {
+                        state: {
+                            transaction: updatedTransaction,
+                        }
+                    }
+                );
+                addToast({
+                    variant: "flat",
+                    color: "success",
+                    title: "Actualización exitosa",
+                    timeout: 3000,
+                    description: transactionsState.message,
+                });
+                dispatch(resetTransactionsState());
+            } else {
+                addToast({
+                    variant: "flat",
+                    color: "danger",
+                    title: "Error",
+                    description: transactionsState.error
+                });
+                dispatch(resetTransactionsState());
+            }
+        }
+    }, [transactionsState]);
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         //  Ingresos y gastos
-        if (transaction.type?.id !== 3) {
+        if ((transaction.type?.id === 1 && transaction.card?.type?.id === 2) || (transaction.type?.id === 3)) {
+            setFromCardAlert(fromCardId === undefined);
+            setToCardAlert(toCardId === undefined);
+            if (fromCardAlert || toCardAlert) {
+                return;
+            }
+
+            const updateTransactionParams: UpdateTransactionParams = {
+                concept: concept ?? "",
+                amount: parseFloat(amount ?? "0"),
+                transaction_date: transactionDate ?? "",
+                accounting_date: transactionDate ?? "",
+                place: "",
+                notes: notes ?? "",
+                category_id: categoryId ?? 0,
+                card_id: toCardId ?? 0,
+                second_card_id: fromCardId ?? undefined,
+            }
+
+            const updateTransactionPayload: UpdateTransactionPayload = {
+                id: transaction.id.toString(),
+                data: updateTransactionParams
+            }
+
+            dispatch(updateTransactionsRequest(updateTransactionPayload));
+        } else {
             setCategoryAlert(categoryId === undefined);
             setCardAlert(cardId === undefined);
             if (categoryAlert || cardAlert) {
@@ -81,31 +137,6 @@ const UpdateTransaction: React.FC = () => {
             }
 
             dispatch(updateTransactionsRequest(updateTransactionPayload));
-        } else {
-            setFromCardAlert(fromCardId === undefined);
-            setToCardAlert(toCardId === undefined);
-            if (fromCardAlert || toCardAlert) {
-                return;
-            }
-
-            const updateTransactionParams: UpdateTransactionParams = {
-                concept: concept ?? "",
-                amount: parseFloat(amount ?? "0"),
-                transaction_date: transactionDate ?? "",
-                accounting_date: transactionDate ?? '',
-                place: "",
-                notes: notes ?? "",
-                category_id: categoryId ?? 0,
-                card_id: cardId ?? 0,
-                second_card_id: undefined,
-            }
-
-            const updateTransactionPayload: UpdateTransactionPayload = {
-                id: transaction.id.toString(),
-                data: updateTransactionParams
-            }
-
-            dispatch(updateTransactionsRequest(updateTransactionPayload));
         }
     }
 
@@ -113,7 +144,8 @@ const UpdateTransaction: React.FC = () => {
     if ((transaction.type?.id === 1 && transaction.card?.type?.id === 2) || (transaction.type?.id === 3)) {
         return (
             <form
-                className="w-full flex flex-col gap-y-6"
+                onSubmit={handleSubmit}
+                className="w-full flex flex-col gap-y-6 pb-12"
             >
                 <div className="w-full flex flex-col gap-y-6">
                     <span className="font-semibold text-center">Editar movimiento</span>
@@ -130,7 +162,7 @@ const UpdateTransaction: React.FC = () => {
                                 updateFromCardId ? (
                                     <Select
                                         required
-                                        size="md"
+                                        size="lg"
                                         variant="flat"
                                         label="Tarjeta origen"
                                         labelPlacement="outside"
@@ -166,7 +198,7 @@ const UpdateTransaction: React.FC = () => {
                                                 setUpdateFromCardId(true);
                                                 setFromIsOpen(!fromIsOpen);
                                             }}
-                                            className="w-full h-10 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
+                                            className="w-full h-12 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
                                         >
                                             <span className="text-sm">{`${incomeRelation.from_transaction?.card?.bank?.name} ${incomeRelation.from_transaction?.card?.numbers}`}</span>
                                             <DynamicFaIcon name={'FaChevronDown'} size={11} />
@@ -181,7 +213,7 @@ const UpdateTransaction: React.FC = () => {
                                 updateToCardId ? (
                                     <Select
                                         required
-                                        size="md"
+                                        size="lg"
                                         variant="flat"
                                         label="Tarjeta destino"
                                         labelPlacement="outside"
@@ -217,7 +249,7 @@ const UpdateTransaction: React.FC = () => {
                                                 setUpdateToCardId(true);
                                                 setToIsOpen(!fromIsOpen);
                                             }}
-                                            className="w-full h-10 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
+                                            className="w-full h-12 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
                                         >
                                             <span className="text-sm">{`${incomeRelation.to_transaction?.card?.bank?.name} ${incomeRelation.to_transaction?.card?.numbers}`}</span>
                                             <DynamicFaIcon name={'FaChevronDown'} size={11} />
@@ -277,7 +309,7 @@ const UpdateTransaction: React.FC = () => {
                         color='primary'
                         radius='lg'
                         className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 mt-6 text-medium"
-                    //isLoading={transactionsState.loading}
+                        isLoading={transactionsState.loading}
                     >
                         Registrar
                     </Button>
@@ -290,7 +322,8 @@ const UpdateTransaction: React.FC = () => {
     // Otros tipos
     return (
         <form
-            className="w-full flex flex-col gap-y-6"
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-y-6 pb-12"
         >
             <div className="w-full flex flex-col gap-y-6">
                 <span className="font-semibold text-center">Editar movimiento</span>
@@ -301,7 +334,7 @@ const UpdateTransaction: React.FC = () => {
                             updateCategoryId ? (
                                 <Select
                                     required
-                                    size="md"
+                                    size="lg"
                                     variant="flat"
                                     label="Categoría"
                                     labelPlacement="outside"
@@ -328,7 +361,7 @@ const UpdateTransaction: React.FC = () => {
                                             setUpdateCategoryId(true);
                                             setCategoryIsOpen(!fromIsOpen);
                                         }}
-                                        className="w-full h-10 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
+                                        className="w-full h-12 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
                                     >
                                         <span className="text-sm">{transaction.category?.name}</span>
                                         <DynamicFaIcon name={'FaChevronDown'} size={11} />
@@ -340,7 +373,7 @@ const UpdateTransaction: React.FC = () => {
                     </div>
                     <div className="w-full lg:w-8/12 flex flex-col lg:flex-row gap-y-6 gap-x-4">
                         <RadioGroup
-                            size="md"
+                            size="lg"
                             label="Tipo de tarjeta"
                             orientation="horizontal"
                             value={cardTypeId?.toString()}
@@ -389,7 +422,7 @@ const UpdateTransaction: React.FC = () => {
                                                 updateCardId ? (
                                                     <Select
                                                         required
-                                                        size="md"
+                                                        size="lg"
                                                         variant="flat"
                                                         label="Tarjeta"
                                                         labelPlacement="outside"
@@ -443,7 +476,7 @@ const UpdateTransaction: React.FC = () => {
                                                                 setUpdateCardId(true);
                                                                 setCardIsOpen(!fromIsOpen);
                                                             }}
-                                                            className="w-full h-10 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
+                                                            className="w-full h-12 bg-neutral-100 hover:bg-neutral-200 px-3 py-2 rounded-xl text-slate-600 flex flex-row justify-between items-center cursor-pointer"
                                                         >
                                                             <span className="text-sm">{`${transaction.card?.bank?.name} ${transaction.card?.numbers}`}</span>
                                                             <DynamicFaIcon name={'FaChevronDown'} size={11} />
@@ -538,8 +571,8 @@ const UpdateTransaction: React.FC = () => {
                         variant="solid"
                         color='primary'
                         radius='lg'
-                        className="w-full bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 mt-6 text-medium"
-                    //isLoading={transactionsState.loading}
+                        className="w-full lg:w-1/6"
+                        isLoading={transactionsState.loading}
                     >
                         Actualizar
                     </Button>

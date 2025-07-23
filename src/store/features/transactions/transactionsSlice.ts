@@ -60,7 +60,7 @@ const transactionsSlice = createSlice({
         },
 
         //  Destroy
-        destroyTransactionsRequest: (state) => {
+        destroyTransactionsRequest: (state, action: PayloadAction<string>) => {
             state.loading = true;
             state.error = null;
             state.destroySuccess = null;

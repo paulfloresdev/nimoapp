@@ -1,7 +1,7 @@
 //  Ejemplo
 export const combo = [
-    {key: undefined, label: "Todos"},
-    {key: 1, label: ""},
+    { key: undefined, label: "Todos" },
+    { key: 1, label: "" },
 ];
 
 export const categories = [
@@ -36,25 +36,25 @@ export const categoriesSearch = [
 ];
 
 export const transactionTypes = [
-    {key: 1, label: "Ingreso"},
-    {key: 2, label: "Gasto"},
-    {key: 3, label: "Pago TDC"},
+    { key: 1, label: "Ingreso" },
+    { key: 2, label: "Gasto" },
+    { key: 3, label: "Pago TDC" },
 ];
 
 export const homeMenu = [
-    {key: 1, label: "Registar movimiento"},
-    {key: 2, label: "Recurrentes"},
+    { key: 1, label: "Registar movimiento" },
+    { key: 2, label: "Recurrentes" },
 ];
 
 export const cardTypes = [
-    {key: 1, label: "Débito"},
-    {key: 2, label: "Crédito"},
+    { key: 1, label: "Débito" },
+    { key: 2, label: "Crédito" },
 ];
 
 export const cardTypesSearch = [
-    {key: undefined, label: "Todos"},
-    {key: 1, label: "Débito"},
-    {key: 2, label: "Crédito"},
+    { key: undefined, label: "Todos" },
+    { key: 1, label: "Débito" },
+    { key: 2, label: "Crédito" },
 ];
 
 export const orderByOptions = [
@@ -64,4 +64,10 @@ export const orderByOptions = [
     { key: 4, label: "Transacción más reciente" },
     { key: 5, label: "Creación más antigua" },
     { key: 6, label: "Creación más reciente" },
+];
+
+export const networks = [
+    { key: 1, label: "Visa" },
+    { key: 2, label: "Mastercard" },
+    { key: 3, label: "American Express" },
 ];

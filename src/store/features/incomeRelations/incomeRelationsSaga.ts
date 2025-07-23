@@ -12,8 +12,10 @@ import {
     verifyIncomeRelationsFailure
 } from './incomeRelationsSlice';
 import { storeIncomeRelationsAPI, indexIncomeRelationsAPI, verifyIncomeRelationsAPI } from '../../../helper/api/backend';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { IndexIncomeRelationData } from '../../../types/incomeRelations';
 
-function* indexIncomeRelationSaga(action: any): Generator<any, any, any> {
+function* indexIncomeRelationSaga(action: PayloadAction<IndexIncomeRelationData>): Generator<any, any, any> {
     try {
         const res = yield call(indexIncomeRelationsAPI, action.payload);
         console.log(res);

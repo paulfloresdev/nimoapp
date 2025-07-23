@@ -1,9 +1,15 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import SideBar from "./SideBar";
 import BottomNav from "./BottomNav";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DynamicFaIcon from "../DynamicFaIcon";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
+import {
+    Button,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownTrigger,
+} from "@heroui/react";
 import { useDispatch } from "react-redux";
 import { logOutRequest } from "../../store/features/auth/authSlice";
 
@@ -14,7 +20,7 @@ const Layout: React.FC = () => {
 
     const handleLogout = useCallback(() => {
         dispatch(logOutRequest());
-        navigate('/login');
+        navigate("/login");
     }, [dispatch, navigate]);
 
     // Determinar el valor de `page` en base a la URL
@@ -23,16 +29,18 @@ const Layout: React.FC = () => {
 
     if (path.includes("/dashboard/recurrents")) page = 1;
     else if (path.includes("/dashboard/months")) page = 2;
+    else if (path.includes("/dashboard/month")) page = 2;
     else if (path.includes("/dashboard/cards")) page = 3;
     else if (path.includes("/dashboard/contacts")) page = 4;
 
     return (
-        <div className="flex min-h-dscreen bg-white">
+        <div className="flex h-dscreen bg-white">
             <SideBar page={page} />
-            <div className="w-full p-6 lg:max-h-screen">
-                <div className="h-full">
-                    <div className="w-full flex flex-row justify-between items-center mb-6 lg:hidden">
-                        <div className="w-12 h-2"></div>
+            <div className="w-full flex flex-col">
+                {/* Top navbar (mobile) */}
+                <div className="p-6 flex-shrink-0 lg:hidden">
+                    <div className="w-full flex flex-row justify-between items-center mb-6">
+                        <div className="w-12 h-2" />
                         <img src="/assets/favicon.png" alt="Logo" className="h-8" />
                         <Dropdown>
                             <DropdownTrigger>
@@ -42,16 +50,22 @@ const Layout: React.FC = () => {
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Static Actions">
                                 <DropdownItem key="edit">Editar datos de usuario</DropdownItem>
-                                <DropdownItem key="delete" className="text-danger" color="danger" onClick={handleLogout}>
+                                <DropdownItem
+                                    key="delete"
+                                    className="text-danger"
+                                    color="danger"
+                                    onClick={handleLogout}
+                                >
                                     Cerrar sesión
                                 </DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
+                    </div>
+                </div>
 
-                    </div>
-                    <div className="w-full h-full pb-12">
-                        <Outlet />
-                    </div>
+                {/* Scrollable content */}
+                <div className="flex-1 overflow-y-auto px-6 lg:pt-6 pb-12 lg:pb-0">
+                    <Outlet />
                 </div>
             </div>
             <BottomNav page={page} />

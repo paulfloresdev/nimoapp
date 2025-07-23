@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { MouseEventHandler, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../../store/configStore/store";
@@ -9,13 +9,15 @@ const baseStorageUrl = import.meta.env.VITE_SITE_BASE_STORAGE_URL_BACKEND;
 
 interface BankCardProps {
     card: Card | null;
+    onClick?: MouseEventHandler<HTMLDivElement>
 }
 
-export const BankCard: React.FC<BankCardProps> = ({ card }) => {
+export const BankCard: React.FC<BankCardProps> = ({ card, onClick }) => {
     if (card === null) return <></>
 
     return (
         <div
+            onClick={onClick}
             key={card.id}
             style={{ backgroundColor: `${card.color}` }}
             className="w-full lg:w-full aspect-[1.5858] rounded-xl p-4 flex flex-col gap-y-2 justify-between"
@@ -49,11 +51,13 @@ const Cards: React.FC = () => {
     }
 
     return (
-        <div className="w-full lg:h-dscreen flex flex-col gap-y-6">
+        <div className="w-full lg:h-dscreen flex flex-col gap-y-6 pb-12">
             <div className="w-full flex flex-row justify-between items-center gap-6">
                 <span className="font-semibold">Cuentas y tarjetas</span>
                 <Button
-                    className="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 text-white font-medium"
+                    color="primary"
+                    className=""
+                    onPress={() => navigate("add")}
                 >
                     Agregar
                 </Button>
@@ -62,7 +66,17 @@ const Cards: React.FC = () => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {
                     cardsState.debit?.map((card) => (
-                        <BankCard card={card} key={card.id} />
+                        <BankCard
+                            card={card}
+                            key={card.id}
+                            onClick={
+                                () => navigate("update", {
+                                    state: {
+                                        card: card
+                                    }
+                                })
+                            }
+                        />
                     ))
                 }
             </div>
@@ -70,7 +84,17 @@ const Cards: React.FC = () => {
             <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
                 {
                     cardsState.credit?.map((card) => (
-                        <BankCard card={card} key={card.id} />
+                        <BankCard
+                            card={card}
+                            key={card.id}
+                            onClick={
+                                () => navigate("/dashboard/cards/update", {
+                                    state: {
+                                        card: card
+                                    }
+                                })
+                            }
+                        />
                     ))
                 }
             </div>
